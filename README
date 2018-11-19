@@ -1,0 +1,5 @@
+Copy UCEC and LUAD hg38 WXS data to MGI
+
+Step 3 is time consuming and typically run in tmux environment
+
+Note that we are deleting all *.parcel files in GDC import directories to save space and keep scp from complaining about permissions
