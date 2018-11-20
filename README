@@ -1,5 +1,15 @@
-Copy UCEC and LUAD hg38 WXS data to MGI
+Utilities / workflows for copying GDC data (CPTAC3 BAM, FASTQ files) from one 
+system to another.  Maintains BamMap information
 
 Step 3 is time consuming and typically run in tmux environment
 
-Note that we are deleting all *.parcel files in GDC import directories to save space and keep scp from complaining about permissions
+NOTE:
+May wish to delete all *.parcel files in GDC import directories to save space and keep scp from complaining about permissions
+This should be done as a preliminary step
+
+cd /diskmnt/Projects/cptac_downloads/data/GDC_import/data
+sudo rm -f */logs/*parcel
+ - todo, deal with argument list too long issues using find ?
+
+It is necessary to set up passwordless SSH connection between local and remote machines:
+    https://linuxize.com/post/how-to-setup-passwordless-ssh-login/

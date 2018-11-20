@@ -1,26 +1,30 @@
 # Copy CPTAC3 data to remote host
 
-# file to upload can either be constructed from LOCALD and UUID, or else obtained from BamMap
+# Usage: 
+#   upload_BM.sh UUID [UUID2 ...]
 #
-# Usage: UUIDs.dat > upload_to_MGI.sh -
-#    or: nohup bash -c "tail -n +2 dat/UUID.0918-Sync.dat | bash upload_to_MGI.sh -" &> log1.dat &
+# Where UUIDs correspond to files (and associated secondary files) which will be copied to remote directory.
+# If UUID is '-', read uuid info from STDIN
 
 # Options
 # -S SR_FILE: path to SR data file.  If provided, will test whether uploaded data exists and has expected size
 # -B BAMMAP: Path to BamMap.  If not defined, path to data will be constructed from UUID and LOCALD
+# -L LOCALD: path to local data root directory.  Required
+# -R REMOTED: path to remote data root directory.  Required
+# -H RHOST: remote username and host.  Required.  Example: mwyczalk@virtual-workstation3.gsc.wustl.edu
 # -f : Force upload of data which appears incomplete (unexpected size)
 # -d : Dry run - skip actual upload
 # -1 : Stop after one UUID processed
 # -V : Validate - print remote file diagnostics but do not upload
 # -v : verbose
 
-# This should be moved to a config file
-LOCALD="/diskmnt/Projects/cptac/GDC_import/data"
-REMOTED="/gscmnt/gc2619/dinglab_cptac3/GDC_import/data"
-HOST="mwyczalk@virtual-workstation3.gsc.wustl.edu"
+# These are specified as input parameters
+# LOCALD="/diskmnt/Projects/cptac/GDC_import/data"  - required
+# REMOTED="/gscmnt/gc2619/dinglab_cptac3/GDC_import/data" - required
+# RHOST="mwyczalk@virtual-workstation3.gsc.wustl.edu" - required
 
 # http://wiki.bash-hackers.org/howto/getopts_tutorial
-while getopts ":dv1S:B:fV" opt; do
+while getopts ":dv1S:B:fVL:R:H:" opt; do
   case $opt in
     d)  
       >&2 echo "Dry run"
@@ -45,6 +49,18 @@ while getopts ":dv1S:B:fV" opt; do
     f)  
       >&2 echo "Forcing upload of incomplete data"
       FORCE=1
+      ;;
+    L)  
+      LOCALD=$OPTARG
+      >&2 echo "LOCALD = $LOCALD"
+      ;;
+    R)  
+      REMOTED=$OPTARG
+      >&2 echo "REMOTED = $REMOTED"
+      ;;
+    H)  
+      RHOST=$OPTARG
+      >&2 echo "RHOST = $RHOST"
       ;;
     \?)
       >&2 echo "Invalid option: -$OPTARG"
@@ -77,6 +93,20 @@ if [[ ! -z $BAMMAP && ! -f $BAMMAP ]]; then
     exit 1
 fi
 
+# LOCALD, REMOTED, and RHOST must all be defined
+if [[ -z $LOCALD ]]; then
+    >&2 echo ERROR: LOCALD \(-L\) not defined.
+    exit 1
+fi
+if [[ -z $REMOTED ]]; then
+    >&2 echo ERROR: REMOTED \(-R\) not defined.
+    exit 1
+fi
+if [[ -z $RHOST ]]; then
+    >&2 echo ERROR: RHOST \(-H\) not defined.
+    exit 1
+fi
+
 
 # https://zaiste.net/a_few_ways_to_execute_commands_remotely_using_ssh/
 # Test the existence and optionally size of remote data file
@@ -97,7 +127,7 @@ function test_dest {
     FNF=$(echo "$REMOTED/$UUID/$FN" | tr -s '/')  # append full path to data file, normalize path separators
 
 # https://stackoverflow.com/questions/12845206/check-if-file-exists-on-remote-host-with-ssh
-    if ! ssh -q $HOST "[[ -f $FNF ]]" ; then
+    if ! ssh -q $RHOST "[[ -f $FNF ]]" ; then
         if [[ $VERBOSE ]]; then
             >&2 echo NOTE: $FNF does not exist
         fi
@@ -118,7 +148,7 @@ function test_dest {
     # stat has different usage on Mac and Linux.  Try both, ignore errors
     # stat -f%z - works on Mac
     # stat -c%s - works on linux
-    BMSIZE=$(ssh $HOST "stat -f%z $FNF 2>/dev/null || stat -c%s $FNF 2>/dev/null " )
+    BMSIZE=$(ssh $RHOST "stat -f%z $FNF 2>/dev/null || stat -c%s $FNF 2>/dev/null " )
     if [ "$BMSIZE" != "$DS" ]; then
         if [[ $VERBOSE ]]; then
             >&2 echo NOTE: $FNF size \($BMSIZE\) differs from expected \($DS\)
@@ -148,8 +178,8 @@ function copy_to_remote {
     # We also need to exclude "logs" directory, since copying it gives permission errors; this is harder with scp
     # performance issues with rsync: https://gist.github.com/KartikTalwar/4393116
     # 
-	CMD="scp -r $DATAD $HOST:$REMOTED"
-    #CMD="rsync -aHAXxv --numeric-ids --delete --progress --exclude='logs' -e 'ssh -T -o Compression=no -x' $DATAD $HOST:$REMOTED"
+	CMD="scp -r $DATAD $RHOST:$REMOTED"
+    #CMD="rsync -aHAXxv --numeric-ids --delete --progress --exclude='logs' -e 'ssh -T -o Compression=no -x' $DATAD $RHOST:$REMOTED"
 
     if [[ $VERBOSE ]]; then
         >&2 echo Running command: "$CMD"
@@ -165,7 +195,7 @@ function copy_to_remote {
 
 	rc=$?
 	if [[ $rc != 0 ]]; then
-		>&2 echo ERROR copying $DATAD to $HOST:$REMOTED
+		>&2 echo ERROR copying $DATAD to $RHOST:$REMOTED
 		>&2 echo $rc: $!
 	else
         if [[ $VERBOSE ]]; then
