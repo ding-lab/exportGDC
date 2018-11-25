@@ -1,9 +1,21 @@
-# Obtain UUIDs for all miRNA data BAMMAP="/home/mwyczalk_test/Projects/CPTAC3/CPTAC3.catalog/denali.BamMap.dat"
-BAMMAP="/home/mwyczalk_test/Projects/CPTAC3/CPTAC3.catalog/denali.BamMap.dat"
+# Obtain UUIDs for all data of interest
+BAMMAP="/home/mwyczalk_test/Projects/CPTAC3/CPTAC3.catalog/katmai.BamMap.dat"
 mkdir -p dat
 OUT="dat/UUIDs_to_download.dat"
 
-awk '{if ($4 == "miRNA-Seq" ) print $10}' $BAMMAP | sort > $OUT
+#     1   # sample_name
+#     2  case
+#     3  disease
+#     4  experimental_strategy
+#     5  sample_type
+#     6  data_path
+#     7  filesize
+#     8  data_format
+#     9  reference
+#    10  UUID
+#    11  system
+
+awk '{if ($4 == "WXS" && $3 == "GBM" && $9 == "hg38") print $10}' $BAMMAP | sort > $OUT
 
 echo Writing to $OUT
 

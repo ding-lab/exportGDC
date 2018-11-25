@@ -9,7 +9,7 @@
 # Options
 # -S SR_FILE: path to SR data file.  If provided, will test whether uploaded data exists and has expected size
 # -B BAMMAP: Path to BamMap.  If not defined, path to data will be constructed from UUID and LOCALD
-# -L LOCALD: path to local data root directory.  Required
+# -L LOCALD: path to local data root directory.  Required if BAMMAP not specified
 # -R REMOTED: path to remote data root directory.  Required
 # -H RHOST: remote username and host.  Required.  Example: mwyczalk@virtual-workstation3.gsc.wustl.edu
 # -f : Force upload of data which appears incomplete (unexpected size)
@@ -93,9 +93,10 @@ if [[ ! -z $BAMMAP && ! -f $BAMMAP ]]; then
     exit 1
 fi
 
-# LOCALD, REMOTED, and RHOST must all be defined
-if [[ -z $LOCALD ]]; then
-    >&2 echo ERROR: LOCALD \(-L\) not defined.
+# REMOTED and RHOST must all be defined
+# LOCALD must be defined if BAMMAP not specified
+if [[ -z $LOCALD && -z $BAMMAP ]]; then
+    >&2 echo ERROR: Neither LOCALD \(-L\) nor BAMMAP \(-B\) defined.
     exit 1
 fi
 if [[ -z $REMOTED ]]; then

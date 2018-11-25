@@ -1,19 +1,13 @@
 # Create a BamMap for remote system
 # This is done by replacing the path and system columns 
 
-LOCAL_BAMMAP="/home/mwyczalk_test/Projects/CPTAC3/CPTAC3.catalog/denali.BamMap.dat"  
+source export.config.sh
 
-# local path for destination system BamMap
-DESTINATION_BAMMAP="/home/mwyczalk_test/Projects/CPTAC3/CPTAC3.catalog/katmai.BamMap.dat"
-DESTINATION_SYSTEM="katmai"
+LOCAL_BAMMAP=$BAMMAP
 
-UUIDS="dat/UUIDs_to_download.dat"
 OUT_BM="dat/${DESTINATION_SYSTEM}.BamMap.export.dat"
 OUT_BM_MERGED="dat/${DESTINATION_SYSTEM}.BamMap.merged.dat"
 
-# Path on remote / destination system
-STAGE_ROOT_REMOTE="/diskmnt/Projects/cptac_downloads_1"
-REMOTED="$STAGE_ROOT_REMOTE/GDC_import/data" 
 
 # Write header
 grep "^#" $LOCAL_BAMMAP | head -n 1 > $OUT_BM

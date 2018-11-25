@@ -1,3 +1,7 @@
-Copy miRNA data to katmai
+Copy GBM WXS data from Katmai to MGI
 
-55.9083 Gb in 150 files
+Planning to copy 4845.02 Gb in 120 files
+
+Target allocation: MGI-gc2741
+- this filled up
+STAGE_ROOT_REMOTE="/gscmnt/gc2741/ding/CPTAC3-data"
