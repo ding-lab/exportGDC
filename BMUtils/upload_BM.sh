@@ -7,7 +7,7 @@
 # If UUID is '-', read uuid info from STDIN
 
 # Options
-# -S SR_FILE: path to SR data file.  If provided, will test whether uploaded data exists and has expected size
+# -S AR_FILE: path to AR data file.  If provided, will test whether uploaded data exists and has expected size
 # -B BAMMAP: Path to BamMap.  If not defined, path to data will be constructed from UUID and LOCALD
 # -L LOCALD: path to local data root directory.  Required if BAMMAP not specified
 # -R REMOTED: path to remote data root directory.  Required
@@ -41,7 +41,7 @@ while getopts ":dv1S:B:fVL:R:H:" opt; do
       STOPAFTERONE=1
       ;;
     S) 
-      SRFN=$OPTARG
+      ARFN=$OPTARG
       ;;
     B) 
       BAMMAP=$OPTARG
@@ -81,11 +81,11 @@ fi
 
 UUIDS=$1
 
-# SR file is optional, but if defined, it must exist.  Same logic for BamMap
-if [[ -z $SRFN ]]; then
-    >&2 echo NOTE: SR file not defined.  Will not check if file being uploaded exists remotely
-elif [[ ! -z $SRFN && ! -f $SRFN ]]; then
-    >&2 echo ERROR: SR file does not exist: $SRFN 
+# AR file is optional, but if defined, it must exist.  Same logic for BamMap
+if [[ -z $ARFN ]]; then
+    >&2 echo NOTE: AR file not defined.  Will not check if file being uploaded exists remotely
+elif [[ ! -z $ARFN && ! -f $ARFN ]]; then
+    >&2 echo ERROR: AR file does not exist: $ARFN 
     exit 1
 fi
 if [[ ! -z $BAMMAP && ! -f $BAMMAP ]]; then
@@ -145,7 +145,7 @@ function test_dest {
         return
     fi
 
-    # Test actual filesize at remote location vs. size expected from SR file
+    # Test actual filesize at remote location vs. size expected from AR file
     # stat has different usage on Mac and Linux.  Try both, ignore errors
     # stat -f%z - works on Mac
     # stat -c%s - works on linux
@@ -234,17 +234,17 @@ do
     fi
 
     SKIP=0
-    # Test for remote file existence and size, but only if SR filename exists (since we need this info
+    # Test for remote file existence and size, but only if AR filename exists (since we need this info
     # for filename and file size)
-    if [ ! -z $SRFN ]; then
-        SR=$(grep $UUID $SRFN)  # assuming only one value returned
-        if [ -z "$SR" ]; then
-            >&2 echo UUID $UUID not found in $SRFN
+    if [ ! -z $ARFN ]; then
+        AR=$(grep $UUID $ARFN)  # assuming only one value returned
+        if [ -z "$AR" ]; then
+            >&2 echo UUID $UUID not found in $ARFN
             >&2 echo Quitting.
             exit 1
         fi
-        FN=$(echo "$SR" | cut -f 7)
-        DS=$(echo "$SR" | cut -f 8)
+        FN=$(echo "$AR" | cut -f 7)
+        DS=$(echo "$AR" | cut -f 8)
 
         CMD="test_dest $UUID $FN $DS"
         RC=$($CMD)
