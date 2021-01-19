@@ -1,0 +1,4 @@
+fsck branch involves testing BamMap for bad paths.
+It relies on BMUtils/BamMap.fsck.sh, which is somewhat based on BMUtils/BamMap.rm.sh,
+    but which is actually quite different because it loops over BamMap, not UUIDs
+Auxilliary scripts for BamMap exports have been deleted
