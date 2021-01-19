@@ -1,0 +1,11 @@
+Compare BamMap sample names against those in CPTAC3 Catalog and update
+the former if they mismatch.  Scripts exist for katmai, storage1, and MGI.
+These can be run as-is in the future
+
+In some cases it has been observed that the sample name after renaming is blank / empty.  This can be detected with awk like,
+
+$ awk 'BEGIN{FS="\t"}{if (length($1) < 2 ) print}' dat/MGI.BamMap.20210119.fix_sample_names.dat
+    C3N-04113   GBM WXS tumor   /gscmnt/gc2619/dinglab_cptac3/GDC_import/data/aed4bf91-e6eb-4727-8859-db34bdd810c5/CPT0285620006.WholeExome.RP-1303.bam 17556011264 BAM hg19    aed4bf91-e6eb-4727-8859-db34bdd810c5    MGI
+
+In this future this should be checked and a warning written.
+The problem appears to be that the entry no longer exists in CPTAC3 catalog.  This should be investigated
