@@ -1,15 +1,29 @@
-Utilities / workflows for copying GDC data (CPTAC3 BAM, FASTQ files) from one 
-system to another.  Maintains BamMap information
+BamMap utilities including
+* Utilities / workflows for copying GDC data (CPTAC3 BAM, FASTQ files) from one 
+system to another.  
+* Update BamMap information.  
 
-Step 3 is time consuming and typically run in tmux environment
+Work here began as ad hoc analyses / fixes implemented as independent workflows, and those
+workflows are reteained more or less independently in workflows in their own directories.
+Motivation is to keep all such workflows and utilities in one place to make life easier and
+create common codebase.  
 
-NOTE:
-May wish to delete all *.parcel files in GDC import directories to save space and keep scp from complaining about permissions
-This should be done as a preliminary step
+# Workflows
 
-cd /diskmnt/Projects/cptac_downloads/data/GDC_import/data
-sudo rm -f */logs/*parcel
- - todo, deal with argument list too long issues using find ?
+## Workflow directory structure
 
-It is necessary to set up passwordless SSH connection between local and remote machines:
-    https://linuxize.com/post/how-to-setup-passwordless-ssh-login/
+Workflows in A_XXX, B_XXX, with each of these serving as ready-working example
+workflows which are developed in place for different projects.  Common codebase in ./src, etc.
+May need to tighten up strucutre in future
+
+## A Update sample names
+./A_update_sample_names from shiso:/Users/mwyczalk/Projects/CPTAC3/CPTAC3.Cases/20201109.update_sample_names
+
+## B Upload to MGI
+Transfer data between systems
+
+## C FSCK
+Contents of fsck branch moved to own workflow.  May want to merge code from here to common
+codebase
+
+/diskmnt/Projects/cptac_scratch/CPTAC3.workflow/export/20190507-BamMap-Edits
