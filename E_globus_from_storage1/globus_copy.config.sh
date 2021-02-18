@@ -55,8 +55,8 @@ DEST_DIR="/gscmnt/gc2619/dinglab_cptac3/GDC_import/data/"
 
 # Format for batch file: 
 # --recursive UUID UUID
-BATCH_FILE="dat/UUID_copy_from_storage1.batch_file.dat"
-UUIDS="dat/UUID_copy_from_storage1.dat"
+BATCH_FILE="dat/batch.UUID_to_copy.dat"
+UUIDS="dat/UUID_to_copy.dat"
 
 CATALOG_MASTER="$CATALOGD/CPTAC3.Catalog.dat"
 BAMMAP_SOURCE="$CATALOGD/BamMap/${SOURCE_SYS}.BamMap.dat"   # note this is a path on GLOBUS_SYS to the source system BamMap

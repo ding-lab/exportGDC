@@ -1,5 +1,8 @@
+source globus_copy.config.sh
 
-#source gdc-import.config.sh
+# Output
+CATALOG_H="dat/Download.Catalog.dat"
+
 
 # Catalog format
 #     1    # sample_name
@@ -66,15 +69,9 @@ echo "                        TOTAL: $TOT_SIZE Tb in $TOT_COUNT files"
 }
 
 
-# MGI
-CATALOGD="/gscuser/mwyczalk/projects/CPTAC3/CPTAC3.catalog"
-CATALOG_MASTER="$CATALOGD/CPTAC3.Catalog.dat"
-CATALOG_H="dat/Download.Catalog.dat"
-UUID="dat/UUID_copy_from_storage1.dat"
-
 >&2 echo Catalog: $CATALOG_MASTER
 
 head -n1 $CATALOG_MASTER > $CATALOG_H
-fgrep -f $UUID $CATALOG_MASTER >> $CATALOG_H
+fgrep -f $UUIDS $CATALOG_MASTER >> $CATALOG_H
 
 summarize $CATALOG_H
