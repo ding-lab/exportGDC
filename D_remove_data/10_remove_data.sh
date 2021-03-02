@@ -1,4 +1,4 @@
-UUID_DELETE="dat/katmai-WGS.UUID.dat"
+UUID_DELETE="/gscmnt/gc2521/dinglab/mwyczalk/projects.CPTAC3/export/20210217.globus_storage/E_globus_from_storage1/dat/UUID_to_copy.dat"
 CATALOGD="/home/mwyczalk_test/Projects/CPTAC3/CPTAC3.catalog"
 BM="$CATALOGD/BamMap/katmai.BamMap.dat"
 NEW_BM="dat/katmai.BamMap.post-delete.dat"
