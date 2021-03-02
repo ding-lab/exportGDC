@@ -1,6 +1,6 @@
-Remove data based on UUID.  Based on /diskmnt/Projects/cptac_scratch/CPTAC3.workflow/import.Y3/delete_WGS.20210111
+Remove data based on UUID.  Specifically, removing data which was (temporarily) copied to MGI
+in ../E_globus_from_storage1
 
-Data downloaded to katmai here: /home/m.wyczalkowski/Projects/CPTAC3/import/20210116.WGS-katmai
+UUID_TO_DELETE="../E_globus_from_storage1/dat/UUID_copy_from_storage1.dat"
 
 
-37587.8 Gb in 418 files
