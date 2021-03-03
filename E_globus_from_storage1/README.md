@@ -1,16 +1,29 @@
+
+
+
+# Previous work
+
+See /gscuser/mwyczalk/projects/Globus/README.md for details of preliminary work
+
+# Making a batch file
+
+A batch file is needed for input into the copy process.  This consists of a modified UUID list.
+
 Format for batch file input:
 ```
 --recursive 0149a1bf-30e0-41c3-994d-70bb82818c4d 0149a1bf-30e0-41c3-994d-70bb82818c4d
 ```
 
-## Configuration
+# Configuration
+
+Need to edit configuration file `globus_copy.config.sh`
 
 In a globus transfer it is helpful to think of three independent systems:
-* GLOBUS_SYS - this is the system where execution of these scripts is taking place
-* SOURCE_SYS - source of globus transfer
-* DEST_SYS   - target of globus transfer
+* `GLOBUS_SYS` - this is the system where execution of these scripts is taking place
+* `SOURCE_SYS` - source of globus transfer
+* `DEST_SYS`   - target of globus transfer
 
-Configuration of paths and other parameters in globus_copy.config.sh is with respect to these
+Configuration of paths and other parameters in `globus_copy.config.sh` is with respect to these
 
 ## Activation
 

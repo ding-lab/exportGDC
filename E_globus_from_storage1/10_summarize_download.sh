@@ -56,8 +56,13 @@ METH_COUNT=$(get_count_by_type "Methylation Array")
 TARG_SIZE=$(get_size_by_type "Targeted Sequencing")
 TARG_COUNT=$(get_count_by_type "Targeted Sequencing")
 
-TOT_SIZE=$(echo "$WGS_SIZE + $WXS_SIZE + $RNA_SIZE + $MIRNA_SIZE + $METH_SIZE + $TARG_SIZE" | bc)
-TOT_COUNT=$(echo "$WGS_COUNT + $WXS_COUNT + $RNA_COUNT + $MIRNA_COUNT + $METH_COUNT + $TARG_COUNT" | bc)
+#TOT_SIZE=$(echo "$WGS_SIZE + $WXS_SIZE + $RNA_SIZE + $MIRNA_SIZE + $METH_SIZE + $TARG_SIZE" | bc)
+#TOT_COUNT=$(echo "$WGS_COUNT + $WXS_COUNT + $RNA_COUNT + $MIRNA_COUNT + $METH_COUNT + $TARG_COUNT" | bc)
+
+#awk "BEGIN {print $num1+$num2; exit}")
+
+TOT_SIZE=$( awk "BEGIN { print $WGS_SIZE + $WXS_SIZE + $RNA_SIZE + $MIRNA_SIZE + $METH_SIZE + $TARG_SIZE ; exit }" )
+TOT_COUNT=$(awk "BEGIN { print $WGS_COUNT + $WXS_COUNT + $RNA_COUNT + $MIRNA_COUNT + $METH_COUNT + $TARG_COUNT ; exit }")
 
 echo "Total required disk space WGS: $WGS_SIZE Tb in $WGS_COUNT files"
 echo "                          WXS: $WXS_SIZE Tb in $WXS_COUNT files"
@@ -68,10 +73,11 @@ echo "          Targeted Sequencing: $TARG_SIZE Tb in $TARG_COUNT files"
 echo "                        TOTAL: $TOT_SIZE Tb in $TOT_COUNT files"
 }
 
+source globus_copy.config.sh
 
 >&2 echo Catalog: $CATALOG_MASTER
 
-head -n1 $CATALOG_MASTER > $CATALOG_H
-fgrep -f $UUIDS $CATALOG_MASTER >> $CATALOG_H
+head -n1 $CATALOG_MASTER > $CATALOG_NEW
+fgrep -f $UUIDS $CATALOG_MASTER >> $CATALOG_NEW
 
-summarize $CATALOG_H
+summarize $CATALOG_NEW
