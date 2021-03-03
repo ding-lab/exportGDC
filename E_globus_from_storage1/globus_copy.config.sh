@@ -1,5 +1,8 @@
 # Definitions for globus copy
 
+# Arbitrary label for this transfer
+LABEL="Storage1 to MGI - 20210302"
+
 # In a globus transfer it is helpful to think of three independent systems:
 # * GLOBUS_SYS - this is the system where execution of these scripts is taking place
 # * SOURCE_SYS - source of globus transfer
@@ -69,3 +72,19 @@ CATALOG_NEW="dat/New.Catalog.dat"
 
 ## BAMMAP is created as the final step of import process.
 #BAMMAP_NEW="dat/${DEST_SYS}.New.BamMap.dat"
+
+# Globus endpoints
+
+#globus endpoint search "Wash U RIS storage1 dtn1"
+#ID                                   | Owner              | Display Name
+#------------------------------------ | ------------------ | ------------------------
+#01f0ac4c-9570-11ea-b3c4-0ae144191ee3 | wustl@globusid.org | Wash U RIS storage1 dtn1
+#globus endpoint search "MGI storage0"
+#ID                                   | Owner              | Display Name
+#------------------------------------ | ------------------ | -------------------------------
+#e66a20e4-aaf1-11e8-970a-0a6d4e044368 | wustl@globusid.org | MGI storage0 data transfer node
+
+### Remembering these
+STORAGE_0_ID=e66a20e4-aaf1-11e8-970a-0a6d4e044368
+STORAGE_1_ID=01f0ac4c-9570-11ea-b3c4-0ae144191ee3
+

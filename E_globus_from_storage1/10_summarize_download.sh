@@ -63,6 +63,7 @@ TARG_COUNT=$(get_count_by_type "Targeted Sequencing")
 
 TOT_SIZE=$( awk "BEGIN { print $WGS_SIZE + $WXS_SIZE + $RNA_SIZE + $MIRNA_SIZE + $METH_SIZE + $TARG_SIZE ; exit }" )
 TOT_COUNT=$(awk "BEGIN { print $WGS_COUNT + $WXS_COUNT + $RNA_COUNT + $MIRNA_COUNT + $METH_COUNT + $TARG_COUNT ; exit }")
+TOT_SIZE_GB=$( awk "BEGIN { print $TOT_SIZE * 1024.; exit }" )
 
 echo "Total required disk space WGS: $WGS_SIZE Tb in $WGS_COUNT files"
 echo "                          WXS: $WXS_SIZE Tb in $WXS_COUNT files"
@@ -70,7 +71,7 @@ echo "                      RNA-Seq: $RNA_SIZE Tb in $RNA_COUNT files"
 echo "                    miRNA-Seq: $MIRNA_SIZE Tb in $MIRNA_COUNT files"
 echo "            Methylation Array: $METH_SIZE Tb in $METH_COUNT files"
 echo "          Targeted Sequencing: $TARG_SIZE Tb in $TARG_COUNT files"
-echo "                        TOTAL: $TOT_SIZE Tb in $TOT_COUNT files"
+echo "                        TOTAL: $TOT_SIZE Tb ($TOT_SIZE_GB Gb) in $TOT_COUNT files"
 }
 
 source globus_copy.config.sh
