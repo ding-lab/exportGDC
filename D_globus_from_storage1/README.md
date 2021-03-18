@@ -1,9 +1,6 @@
-
-
-
 # Previous work
 
-See /gscuser/mwyczalk/projects/Globus/README.md for details of preliminary work
+See `doc/README.globus_testing.md` (originally /gscuser/mwyczalk/projects/Globus/README.md) for details of preliminary work
 
 # Making a batch file
 
