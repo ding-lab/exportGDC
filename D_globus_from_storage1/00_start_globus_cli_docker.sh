@@ -1,10 +1,13 @@
-# this has to be worked out on other systems.  See 
-# CromwellRunner for model
+# Start a docker image with globus-cli utilities on MGI
 
-# See /gscuser/mwyczalk/projects/Globus/README.md for details of preliminary work
+# See doc/README.globus_testing.md for details of preliminary work and
+# choices of docker images
+IMAGE="liambindle/globus-cli"
 
-START_DOCKER="/gscuser/mwyczalk/projects/WUDocker"
-bash $START_DOCKER/start_docker.sh -M MGI -I liambindle/globus-cli
+# [WUDocker](https://github.com/ding-lab/WUDocker.git) is utility for starting 
+# docker images on WU systems
+START_DOCKER="../WUDocker"
+bash $START_DOCKER/start_docker.sh -M MGI -I $IMAGE
 
 
 

@@ -8,5 +8,5 @@ DEST_DIR="/gscmnt/gc2619/dinglab_cptac3/GDC_import/data/"
 # 
 #ARGS="--dry-run"
 
-cat $BATCH_FILE | globus transfer $STORAGE_1_ID:$SRC_DIR $STORAGE_0_ID:$DEST_DIR --batch --label "$LABEL" $ARGS
+cat $BATCH_FILE | globus transfer $STORAGE_1_ID:$SRC_DIR $STORAGE_0_ID:$DEST_DIR --batch --label "$LABEL" $ARGS $@
 

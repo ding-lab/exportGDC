@@ -1,7 +1,7 @@
 # Definitions for globus copy
 
 # Arbitrary label for this transfer
-LABEL="Storage1 to MGI - 20210302"
+LABEL="Storage1 to MGI - 20210317"
 
 # In a globus transfer it is helpful to think of three independent systems:
 # * GLOBUS_SYS - this is the system where execution of these scripts is taking place
@@ -58,8 +58,8 @@ DEST_DIR="/gscmnt/gc2619/dinglab_cptac3/GDC_import/data/"
 
 # Format for batch file: 
 # --recursive UUID UUID
-BATCH_FILE="dat/batch.UUID_to_copy.dat"
 UUIDS="dat/UUID_to_copy.dat"
+BATCH_FILE="dat/batch.UUID_to_copy.dat"
 
 CATALOG_MASTER="$CATALOGD/CPTAC3.Catalog.dat"
 BAMMAP_SOURCE="$CATALOGD/BamMap/${SOURCE_SYS}.BamMap.dat"   # note this is a path on GLOBUS_SYS to the source system BamMap

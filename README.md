@@ -8,6 +8,8 @@ workflows are reteained more or less independently in workflows in their own dir
 Motivation is to keep all such workflows and utilities in one place to make life easier and
 create common codebase.  
 
+
+
 ## What is a BamMap file
 Note that we track all CPTAC3 data downloaded to our systems in BamMap files; in particular,
 on MGI, we expect that this file always reflect data found on disk:
@@ -20,7 +22,16 @@ For this reason this file needs to be updated when data are added and deleted.
 This documetation is updated for the specific task of copying data via globus from storage1 to MGI,
 then deleting it once processing is complete, updating the BamMap at each step
 
+## Getting started
+First clone a new repository from the master `exportGDC` repository to get scripts as well as templates
+of analyses:
+```
+git clone https://github.com/ding-lab/exportGDC.git --recurse-submodules 20210317.globus_storage
+```
+Where `20210317.globus_storage` is the name of the respository which will be created.  Do all your work there.
+
 ## Copy via globus
+Details here:
 D_globus_from_storage1/README.md
 
 ## Delete data on MGI
