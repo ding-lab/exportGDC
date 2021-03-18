@@ -8,8 +8,6 @@ See `doc/README.globus_testing.md` (originally /gscuser/mwyczalk/projects/Globus
 
 Assuming copying from storage1 to MGI
 
-
-
 ## Configuration
 
 Edit `globus_copy.config.sh` to define the source and destination systems and other details.  
@@ -140,7 +138,25 @@ spreadsheet.  If this is part of the CPTAC3 dataset please track of data movemen
 You can track activity from the [globus web app](https://app.globus.org/activity) or using the command line
 utility
 
-## When transfer complete
+## Updating BamMap
 
-Do a `git pull origin master` of CPTAC3 catalog
+Do a `git pull origin master` of CPTAC3 catalog in directory defined by CATALOGD in globus_copy.config.sh
+to make sure have the latest version
 
+Then run
+```
+bash 30_make_BamMap.sh
+```
+to verify all data downloaded and to create the files
+* dat/MGI.BamMap.globus_copy.dat - has just the newly downloaded data
+* dat/MGI.BamMap.merged.dat - has new global BamMap file, based on merge with global BamMap 
+
+### Update global BamMap
+
+Inspect and copy new BamMap with,
+```
+vimdiff dat/MGI.BamMap.merged.dat /gscuser/mwyczalk/projects/CPTAC3/CPTAC3.catalog/BamMap/MGI.BamMap.dat
+cp dat/MGI.BamMap.merged.dat /gscuser/mwyczalk/projects/CPTAC3/CPTAC3.catalog/BamMap/MGI.BamMap.dat
+```
+
+Finally, perform `git add` and `git commit` on the new global BamMap 
